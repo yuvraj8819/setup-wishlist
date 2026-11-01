@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Yuvraj's Setup &amp; Wishlist</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: spec-sheet ledger — totals strip on top, two grouped ledgers (owned / wanted) below */
+:root{
+  --bg:#f3f4f7; --surface:#ffffff; --fg:#151821; --muted:#5d6475; --line:#dde0e8;
+  --accent:#2f54eb; --accent-soft:#e6ebff; --want:#b4471f; --want-soft:#fbeae3; --done:#1f7a4d;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1117; --surface:#171a23; --fg:#e8eaf0; --muted:#9097a8; --line:#272b37;
+  --accent:#7d97ff; --accent-soft:#1d2440; --want:#f08a5d; --want-soft:#33201a; --done:#5fcf95; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1117; --surface:#171a23; --fg:#e8eaf0; --muted:#9097a8; --line:#272b37;
+  --accent:#7d97ff; --accent-soft:#1d2440; --want:#f08a5d; --want-soft:#33201a; --done:#5fcf95; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding-block:32px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:28px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;max-width:62ch}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tot{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.tot .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.tot .num{font-family:var(--mono);font-weight:600;font-size:clamp(20px,3.4vw,28px);font-variant-numeric:tabular-nums}
+.tot .meta{font-size:13px;color:var(--muted)}
+.tot.own .num{color:var(--accent)} .tot.want .num{color:var(--want)}
+.tot.all{background:var(--fg);color:var(--bg);border-color:var(--fg)} .tot.all .lbl,.tot.all .meta{color:var(--bg);opacity:.7}
+.bar{height:8px;border-radius:4px;background:var(--want);overflow:hidden;display:flex}
+.bar span{background:var(--accent);display:block}
+section{display:flex;flex-direction:column;gap:14px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--fg);padding-bottom:8px}
+h2{font-family:var(--display);font-weight:700;font-size:24px;margin:0}
+.sec-h .sum{font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums}
+.list{display:flex;flex-direction:column;gap:12px}
+.group{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.group h3{margin:0;padding:10px 16px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);
+  font-weight:600;background:var(--bg);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
+.group h3 .gs{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:0}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 16px;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row.tick{grid-template-columns:auto minmax(0,1fr) auto}
+.row input[type="checkbox"]{width:18px;height:18px;accent-color:var(--done);margin:0;cursor:pointer}
+.row.bought .name > .lbl-t{text-decoration:line-through;color:var(--muted)}
+.row.bought .price input{color:var(--muted);text-decoration:line-through}
+.got{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--done);margin-left:6px}
+.name{font-weight:500;min-width:0}
+.note{display:block;font-size:12.5px;color:var(--muted);font-weight:400}
+.price{display:flex;align-items:center;gap:2px;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.price span{color:var(--muted)}
+.price input{width:9ch;font:600 14px var(--mono);text-align:right;background:transparent;color:var(--fg);
+  border:1px solid transparent;border-radius:6px;padding:4px 6px;font-variant-numeric:tabular-nums}
+.price input:hover{border-color:var(--line)} .price input:focus{border-color:var(--accent);background:var(--bg)}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pick button{font:500 12.5px var(--body);border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:3px 10px;cursor:pointer}
+.pick button[aria-pressed="true"]{background:var(--want-soft);color:var(--want);border-color:var(--want)}
+.want-sec .sec-h{border-color:var(--want)}
+.foot{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.foot button{font:600 13px var(--body);background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+@media (max-width:640px){.totals{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Setup &amp; Wishlist</h1>
+    <p class="sub">What I own, what I want, and what it all adds up to, at Indian retail prices (MRP, new). Tick wishlist items as you buy them. Tap any price to change it.</p>
+  </header>
+
+  <div class="totals">
+    <div class="tot own"><span class="lbl">Current setup</span><span class="num" id="t-own">–</span><span class="meta" id="m-own"></span></div>
+    <div class="tot want"><span class="lbl">Wishlist</span><span class="num" id="t-want">–</span><span class="meta" id="m-want"></span></div>
+    <div class="tot all"><span class="lbl">Both combined</span><span class="num" id="t-all">–</span><div class="bar" aria-hidden="true"><span id="bar-own"></span></div><span class="meta" id="m-all"></span></div>
+  </div>
+
+  <section>
+    <div class="sec-h"><h2>Current setup</h2><span class="sum" id="s-own"></span></div>
+    <div class="list" id="own"></div>
+  </section>
+
+  <section class="want-sec">
+    <div class="sec-h"><h2>Wishlist</h2><span class="sum" id="s-want"></span></div>
+    <div class="list" id="want"></div>
+  </section>
+
+  <div class="foot">
+    <span>Prices in ₹, as of November 2026. Items no longer sold use their India launch price.</span>
+    <button id="reset" type="button">Reset prices and ticks</button>
+  </div>
+</div>
+
+<script>
+// [id, name, note, price in ₹, optional choices [[label, price], ...]]
+const OWN = [
+  {g:"Apple", items:[
+    ["mba","MacBook Air (M1)","India launch price",92900],
+    ["iphone","iPhone 18 Pro Max","",180000],
+    ["ipad","iPad Air 13-inch (M3)","",79900],
+    ["pencil","Apple Pencil Pro","",11900],
+    ["app2","AirPods Pro 2","India launch price",26900],
+    ["aw7","Apple Watch Series 7","India launch price",41900],
+    ["atv","Apple TV 4K","",14900],
+    ["mm","Apple Magic Mouse","",7500],
+    ["cloth","Apple Polishing Cloth","",1900],
+  ]},
+  {g:"Gaming PC", items:[
+    ["gpu","NVIDIA GeForce RTX 4060","8 GB",28500],
+    ["cpu","AMD Ryzen 5 7600X","",18000],
+    ["ram","G.Skill DDR5 16 GB","5600 MHz CL36",11500],
+    ["ssd","XPG 1 TB NVMe SSD","",8000],
+  ]},
+  {g:"Displays & desk", items:[
+    ["aw","Alienware AW3423DW","34-inch QD-OLED ultrawide",109990],
+    ["len","Lenovo 24-inch monitor","Secondary display",12000],
+    ["dock","Lenovo ThinkPad dock","",30000],
+  ]},
+  {g:"Audio", items:[
+    ["xm5","Sony WH-1000XM5","",34990],
+    ["bsv2","Razer BlackShark V2 X","",4999],
+    ["iem","Castor Pro IEMs","",2000],
+    ["mic","Logitech G Yeti Orb mic","",4999],
+  ]},
+  {g:"Mice & keyboards", items:[
+    ["lss","Logitech G Pro X2 Superstrike","",18995],
+    ["v8","Cyrox V8 mouse","",8000],
+    ["epo","Epomaker Shadow-X keyboard","",7000],
+    ["v60","GravaStar V60 Pro keyboard","",25000],
+  ]},
+  {g:"Console", items:[
+    ["ps5","PlayStation 5","",70000],
+  ]},
+];
+const WANT = [
+  {g:"Living room", items:[
+    ["tv","Sony Bravia 8, 55-inch","OLED TV",164990],
+    ["ht","Sony Bravia Theater System 6","Home theater",69990],
+  ]},
+  {g:"Apple", items:[
+    ["mbam6","MacBook Air (M6)","Not launched yet, expected price",109900],
+    ["app3","AirPods Pro 3","Next generation after the Pro 2",25900],
+  ]},
+  {g:"PC upgrades", items:[
+    ["ngpu","Graphics card upgrade","",0,[["AMD RX 9070 XT",64000],["NVIDIA RTX 5070",58000]]],
+    ["nram","G.Skill DDR5 16 GB (matching kit)","Brings you to 32 GB",11500],
+    ["nssd","1 TB NVMe SSD","Extra storage",8000],
+  ]},
+  {g:"Audio", items:[
+    ["mr5","Edifier MR5","Studio monitor speakers",15999],
+  ]},
+  {g:"Handhelds & VR", items:[
+    ["doki","DOKIDE6","",20000],
+    ["sw2","Nintendo Switch 2","",45000],
+    ["ally","ASUS ROG Xbox Ally","",69999],
+    ["q3","Meta Quest 3","512 GB",55000],
+  ]},
+  {g:"Fitness", items:[
+    ["fit","Fitness tracker","",0,[["Fitbit Air",9999],["Whoop (1-year membership)",19999]]],
+  ]},
+];
+
+const KEY = "setup-wishlist-inr";
+let state = {prices:{}, picks:{}, bought:{}};
+try{ const s = JSON.parse(localStorage.getItem(KEY)||"null"); if(s) state = Object.assign(state,s); }catch(e){}
+const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} };
+
+const pick = it => state.picks[it[0]] ?? 0;
+const defPrice = it => it[4] ? it[4][pick(it)][1] : it[3];
+const priceKey = it => it[4] ? it[0]+":"+pick(it) : it[0];
+const price = it => state.prices[priceKey(it)] ?? defPrice(it);
+const fmt = n => "₹" + Math.round(n).toLocaleString("en-IN");
+const all = list => list.flatMap(g=>g.items);
+const sum = items => items.reduce((t,it)=>t+price(it),0);
+
+function renderList(list, el, tickable){
+  el.innerHTML = "";
+  list.forEach(g=>{
+    const box = document.createElement("div"); box.className = "group";
+    box.innerHTML = `<h3><span>${g.g}</span><span class="gs">${fmt(sum(g.items))}</span></h3>`;
+    g.items.forEach(it=>{
+      const got = tickable && state.bought[it[0]];
+      const row = document.createElement("div");
+      row.className = "row" + (tickable ? " tick" : "") + (got ? " bought" : "");
+      const label = it[4] ? it[4][pick(it)][0] : it[1];
+      let html = tickable ? `<input type="checkbox" id="b-${it[0]}" data-buy="${it[0]}" aria-label="Bought ${label}" ${got?"checked":""}>` : "";
+      html += `<div class="name"><span class="lbl-t">${label}</span>${got?`<span class="got">Bought</span>`:""}${it[2]?`<span class="note">${it[2]}</span>`:""}`;
+      if(it[4]){
+        html += `<span class="note">${it[1]}: pick one</span><div class="pick">` +
+          it[4].map((o,i)=>`<button type="button" data-pick="${it[0]}" data-i="${i}" aria-pressed="${pick(it)===i}">${o[0]}</button>`).join("") + `</div>`;
+      }
+      html += `</div><label class="price"><span>₹</span><input id="p-${it[0]}" inputmode="numeric" aria-label="Price of ${label}" data-key="${priceKey(it)}" value="${Math.round(price(it)).toLocaleString("en-IN")}"></label>`;
+      row.innerHTML = html; box.appendChild(row);
+    });
+    el.appendChild(box);
+  });
+}
+
+function renderTotals(){
+  const ownItems = all(OWN), wantItems = all(WANT);
+  const o = sum(ownItems), w = sum(wantItems), a = o + w;
+  const bought = wantItems.filter(it=>state.bought[it[0]]);
+  const left = w - sum(bought);
+  const set = (id,t) => document.getElementById(id).textContent = t;
+  set("t-own", fmt(o)); set("t-want", fmt(w)); set("t-all", fmt(a));
+  set("s-own", fmt(o)); set("s-want", `${fmt(left)} left to buy`);
+  set("m-own", ownItems.length + " items");
+  set("m-want", bought.length
+    ? `${bought.length} of ${wantItems.length} bought · ${fmt(left)} left`
+    : `${wantItems.length} items, none bought yet`);
+  set("m-all", `Setup is ${Math.round(o/a*100)}% of the total`);
+  document.getElementById("bar-own").style.width = (o/a*100) + "%";
+}
+
+function render(){
+  renderList(OWN, document.getElementById("own"), false);
+  renderList(WANT, document.getElementById("want"), true);
+  renderTotals();
+}
+
+document.addEventListener("click", e=>{
+  const p = e.target.closest("[data-pick]");
+  if(p){ state.picks[p.dataset.pick] = +p.dataset.i; save(); render(); return; }
+  if(e.target.id === "reset"){ state = {prices:{}, picks:{}, bought:{}}; save(); render(); }
+});
+document.addEventListener("change", e=>{
+  const b = e.target.closest("[data-buy]");
+  if(b){ state.bought[b.dataset.buy] = b.checked; save(); render(); return; }
+  const inp = e.target.closest("input[data-key]"); if(!inp) return;
+  const v = parseFloat(inp.value.replace(/[^0-9.]/g,""));
+  if(!isNaN(v)) state.prices[inp.dataset.key] = v;
+  save(); render();
+});
+render();
+</script>
+</body>
+</html>
