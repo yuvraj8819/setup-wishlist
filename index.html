@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#11131a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Wishlist">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Yuvraj's Setup &amp; Wishlist</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -28,6 +36,8 @@ body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px
 .wrap{max-width:980px;margin:0 auto;padding-block:32px 64px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   display:flex;flex-direction:column;gap:28px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:44px;height:44px;border-radius:11px;flex:none}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0;text-wrap:balance}
 .sub{color:var(--muted);margin:6px 0 0;max-width:62ch}
 button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -76,7 +86,26 @@ h2{font-family:var(--display);font-weight:700;font-size:24px;margin:0}
 
 <div class="wrap">
   <header>
-    <h1>Setup &amp; Wishlist</h1>
+    <div class="brand"><svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7d97ff"/>
+      <stop offset="1" stop-color="#c08bff"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="#11131a"/>
+  <rect x="108" y="100" width="296" height="308" rx="24" fill="none" stroke="#e8eaf0" stroke-width="16"/>
+  <line x1="320" y1="108" x2="320" y2="400" stroke="#e8eaf0" stroke-width="10" opacity=".3"/>
+  <circle cx="362" cy="170" r="22" fill="none" stroke="url(#lg)" stroke-width="10"/>
+  <circle cx="362" cy="254" r="22" fill="none" stroke="url(#lg)" stroke-width="10"/>
+  <circle cx="362" cy="338" r="22" fill="none" stroke="url(#lg)" stroke-width="10"/>
+  <circle cx="200" cy="188" r="38" fill="none" stroke="url(#lg)" stroke-width="12"/>
+  <circle cx="200" cy="188" r="9" fill="url(#lg)"/>
+  <rect x="146" y="290" width="148" height="34" rx="10" fill="url(#lg)"/>
+  <rect x="140" y="408" width="44" height="14" rx="7" fill="#e8eaf0"/>
+  <rect x="328" y="408" width="44" height="14" rx="7" fill="#e8eaf0"/>
+</svg>
+    <h1>Setup &amp; Wishlist</h1></div>
     <p class="sub">What I own, what I want, and what it all adds up to, at Indian retail prices (MRP, new). Tick wishlist items as you buy them. Tap any price to change it.</p>
   </header>
 
@@ -250,5 +279,6 @@ document.addEventListener("change", e=>{
 });
 render();
 </script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}</script>
 </body>
 </html>
